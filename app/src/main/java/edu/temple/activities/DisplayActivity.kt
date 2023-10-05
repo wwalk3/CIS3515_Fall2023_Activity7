@@ -13,15 +13,18 @@ class DisplayActivity : AppCompatActivity() {
 
     // TODO Step 1: Launch TextSizeActivity when button clicked to allow selection of text size value
 
-
-        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-
-        }
-
     // TODO Step 3: Use returned value for lyricsDisplayTextView text size
 
     private lateinit var lyricsDisplayTextView: TextView
     private lateinit var textSizeSelectorButton: Button
+
+    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == RESULT_OK) {
+            it.data?.apply {
+                lyricsDisplayTextView.textSize = getFloatExtra(RESULT_KEY, 34f)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +34,11 @@ class DisplayActivity : AppCompatActivity() {
         textSizeSelectorButton = findViewById(R.id.textSizeSelectorButton)
 
         textSizeSelectorButton.setOnClickListener {
-            val launchIntent = Intent(this@MainActivity, TextSizeActivity::class.java)
+            val launchIntent = Intent(this@DisplayActivity, TextSizeActivity::class.java)
             launchIntent.putExtra(MESSAGE_KEY, "Looking for a text size")
             launcher.launch(launchIntent)
+
+
         }
 
     }
