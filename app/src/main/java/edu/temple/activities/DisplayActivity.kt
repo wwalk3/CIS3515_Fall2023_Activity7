@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 
 const val RESULT_KEY = "sending a message"
+const val MESSAGE_KEY = "looking for a text size"
 class DisplayActivity : AppCompatActivity() {
 
     // TODO Step 1: Launch TextSizeActivity when button clicked to allow selection of text size value
@@ -17,10 +18,6 @@ class DisplayActivity : AppCompatActivity() {
 
         }
 
-    findViewById<Button>(R.id.textSizeSelectorButton).setOnClickListener {
-            val launchIntent = Intent(this@MainActivity, TextSizeActivity::class.java)
-
-        }
     // TODO Step 3: Use returned value for lyricsDisplayTextView text size
 
     private lateinit var lyricsDisplayTextView: TextView
@@ -32,6 +29,12 @@ class DisplayActivity : AppCompatActivity() {
 
         lyricsDisplayTextView = findViewById(R.id.lyricsDisplayTextView)
         textSizeSelectorButton = findViewById(R.id.textSizeSelectorButton)
+
+        textSizeSelectorButton.setOnClickListener {
+            val launchIntent = Intent(this@MainActivity, TextSizeActivity::class.java)
+            launchIntent.putExtra(MESSAGE_KEY, "Looking for a text size")
+            launcher.launch(launchIntent)
+        }
 
     }
 }
